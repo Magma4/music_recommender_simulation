@@ -14,15 +14,17 @@ The recommender **suggests up to five songs** from a fixed list. It does not “
 
 ## Data Used
 
-There are **18 songs** in `data/songs.csv`. Each row has **genre**, **mood**, **energy** (0–1), plus **tempo**, **valence**, **danceability**, and **acousticness**. The scorer **only uses genre, mood, and energy** today. The set is **tiny** and made up; many genres or moods appear **once or twice**, so results are **not** like a real streaming catalog.
+There are **18 songs** in `data/songs.csv`. Each row has **genre**, **mood**, **energy** (0–1), **tempo**, **valence**, **danceability**, **acousticness**, plus **popularity** (0–100), **release_decade**, **mood_tags** (pipe-separated), **production_style**, **instrumental**, and **vocal_language**. The set is **tiny** and made up; many genres or moods appear **once or twice**, so results are **not** like a real streaming catalog.
 
 ---
 
 ## Algorithm Summary
 
-For each song, we **add points** for a **genre match** and a **mood match** (exact labels, case-insensitive). We **add an energy score** from **how close** the song’s energy is to the user’s target (nearer is better, on a 0–1 scale). Everything is **summed** into one number. We **sort** all songs by that number and take the **top few**. The program also prints **reasons** (e.g. how many points each part earned).
+For each song, we **add points** for **genre** and **mood** matches (exact labels, case-insensitive) and an **energy fit** (closer to the user’s target is better). **Mode** (`balanced`, `genre_first`, `mood_first`, `energy_focused`) changes how strongly those three pillars are weighted. **Optional** user fields turn on more terms: **popularity** (scaled 0–100), **decade** fit vs `preferred_decade`, **mood_tags** overlap, **bedroom** production if the user prefers lofi-style production, **instrumental**, and **language** match.
 
-For experiments, you can turn on **weight shift**: **smaller** genre points and **double** energy points, to see how much rankings depend on those choices.
+We usually build the top five with **greedy diversity**: repeating the same **artist** or **genre** in the list **lowers** the effective rank score so the spread is a bit fairer. The CLI prints **reason** lines for each contribution (and diversity notes when they apply).
+
+For experiments, **weight shift** (env var) **cuts** genre weight and **doubles** the energy term to stress-test sensitivity.
 
 ---
 
@@ -56,7 +58,7 @@ We ran **several fake user profiles** in the terminal: high-energy pop, chill lo
 
 2. **Group** related genres (e.g. map “indie pop” under pop) or add **synonyms** for moods.
 
-3. **Diversify** the top five so it is not five **almost identical** tracks when the catalog allows it.
+3. **Tune** diversity penalties or add **re-ranking** so variety feels natural, not just “penalize repeats.”
 
 ---
 
