@@ -1,111 +1,71 @@
-# 🎧 Model Card: Music Recommender Simulation
+# Model Card — Music Recommender Simulation
 
-## 1. Model Name  
+## Model Name
 
-Give your model a short, descriptive name.  
-Example: **VibeFinder 1.0**  
-
----
-
-## 2. Intended Use  
-
-Describe what your recommender is designed to do and who it is for. 
-
-Prompts:  
-
-- What kind of recommendations does it generate  
-- What assumptions does it make about the user  
-- Is this for real users or classroom exploration  
+**VibeFinder 1.0** — a small, see-through song ranker for learning.
 
 ---
 
-## 3. How the Model Works  
+## Goal / Task
 
-Explain your scoring approach in simple language.  
-
-Prompts:  
-
-- What features of each song are used (genre, energy, mood, etc.)  
-- What user preferences are considered  
-- How does the model turn those into a score  
-- What changes did you make from the starter logic  
-
-Avoid code here. Pretend you are explaining the idea to a friend who does not program.
+The recommender **suggests up to five songs** from a fixed list. It does not “learn” from new data each run. It **ranks** every track once, using the same rules, and returns the highest scores.
 
 ---
 
-## 4. Data  
+## Data Used
 
-Describe the dataset the model uses.  
-
-Prompts:  
-
-- How many songs are in the catalog  
-- What genres or moods are represented  
-- Did you add or remove data  
-- Are there parts of musical taste missing in the dataset  
+There are **18 songs** in `data/songs.csv`. Each row has **genre**, **mood**, **energy** (0–1), plus **tempo**, **valence**, **danceability**, and **acousticness**. The scorer **only uses genre, mood, and energy** today. The set is **tiny** and made up; many genres or moods appear **once or twice**, so results are **not** like a real streaming catalog.
 
 ---
 
-## 5. Strengths  
+## Algorithm Summary
 
-Where does your system seem to work well  
+For each song, we **add points** for a **genre match** and a **mood match** (exact labels, case-insensitive). We **add an energy score** from **how close** the song’s energy is to the user’s target (nearer is better, on a 0–1 scale). Everything is **summed** into one number. We **sort** all songs by that number and take the **top few**. The program also prints **reasons** (e.g. how many points each part earned).
 
-Prompts:  
-
-- User types for which it gives reasonable results  
-- Any patterns you think your scoring captures correctly  
-- Cases where the recommendations matched your intuition  
+For experiments, you can turn on **weight shift**: **smaller** genre points and **double** energy points, to see how much rankings depend on those choices.
 
 ---
 
-## 6. Limitations and Bias 
+## Observed Behavior / Biases
 
-Where the system struggles or behaves unfairly. 
+**Genre counts a lot.** A **pop** song with **high energy** can land near the top for someone who asked for **happy pop**, even if the song’s mood is **intense**—because wrong moods are **not punished**, they just **miss** the mood bonus.
 
-Prompts:  
+**Labels are strict.** “Indie pop” is **not** treated as “pop,” so some tracks that *feel* right never get the big genre bump.
 
-- Features it does not consider  
-- Genres or moods that are underrepresented  
-- Cases where the system overfits to one preference  
-- Ways the scoring might unintentionally favor some users  
+**Small data = sameness.** The same rows show up a lot for certain profiles because there are **few** rows that match at all.
 
 ---
 
-## 7. Evaluation  
+## Evaluation Process
 
-How you checked whether the recommender behaved as expected. 
-
-Prompts:  
-
-- Which user profiles you tested  
-- What you looked for in the recommendations  
-- What surprised you  
-- Any simple tests or comparisons you ran  
-
-No need for numeric metrics unless you created some.
+We ran **several fake user profiles** in the terminal: high-energy pop, chill lofi, intense rock, plus **edge** mixes (e.g. **somber** mood with **very high** energy). We read the **top five** and the **reason** lines for each. We compared **baseline** scoring to a **weight-shift** run (see `docs/phase4-stress-test-output.txt` and `docs/phase4-weight-shift-output.txt`). **pytest** checks basic ranking and that scores return **numbers + reason strings**.
 
 ---
 
-## 8. Future Work  
+## Intended Use and Non-Intended Use
 
-Ideas for how you would improve the model next.  
+**Intended:** **Teaching and demos.** Showing how **rules + data** produce recommendations you can **read and argue with**.
 
-Prompts:  
-
-- Additional features or preferences  
-- Better ways to explain recommendations  
-- Improving diversity among the top results  
-- Handling more complex user tastes  
+**Not intended:** **Real product** decisions, **fairness** claims, or **personalized** music advice for paying users. It should **not** replace human judgment or a real recommender backed by **much more data** and **oversight**.
 
 ---
 
-## 9. Personal Reflection  
+## Ideas for Improvement
 
-A few sentences about your experience.  
+1. **Penalize** or **discount** songs when mood clearly **conflicts** with what the user asked for, not only when it fails to match.
 
-Prompts:  
+2. **Group** related genres (e.g. map “indie pop” under pop) or add **synonyms** for moods.
 
-- What you learned about recommender systems  
-- Something unexpected or interesting you discovered  
-- How this changed the way you think about music recommendation apps  
+3. **Diversify** the top five so it is not five **almost identical** tracks when the catalog allows it.
+
+---
+
+## Personal Reflection
+
+**Biggest learning moment:** Seeing **Gym Hero** rank high for “happy” seekers was the wake-up call. The math is “honest,” but it does not know that **intense** and **happy** can clash. **Design choices** (how big genre is vs mood) matter as much as the code.
+
+**AI tools:** They sped up **boilerplate** and **wording**, and helped **brainstorm** edge-case profiles. I still had to **trace the score by hand** for one song and run **`main`** to be sure the terminal matched my understanding. **Trust, then verify.**
+
+**Surprise:** A few **if** rules and addition still **feel** like a “recommendation” because **ranking** and **short explanations** mirror what apps do—just with the **cover removed**.
+
+**Next if I extended this:** I would add **valence** or **tempo bands**, a **diversity** pass on the top five, and a **slightly bigger** CSV so genre is not a **lottery** when only one row matches.

@@ -2,16 +2,7 @@
 
 ## Project Summary
 
-In this project you will build and explain a small music recommender system.
-
-Your goal is to:
-
-- Represent songs and a user "taste profile" as data
-- Design a scoring rule that turns that data into recommendations
-- Evaluate what your system gets right and wrong
-- Reflect on how this mirrors real world AI recommenders
-
-Replace this paragraph with your own summary of what your version does.
+This repo is a **CLI-first** music recommender simulation: songs live in a CSV, user taste is a small preference dict, and **`src/recommender.py`** scores every track from **genre**, **mood**, and **energy**, with **reason strings** for transparency. **`src/main.py`** runs multiple stress-test profiles in the terminal. **Phase 5** write-ups live in **`model_card.md`** (task, data, algorithm in plain language, biases, evaluation, intended / non-intended use, improvements, and **personal reflection**) and **`reflection.md`** for profile comparisons.
 
 ---
 
@@ -144,65 +135,29 @@ pip install -r requirements.txt
 python -m src.main
 ```
 
-### CLI verification (Step 4)
+### CLI verification (Phase 3 / Step 4)
 
-The simulation is **CLI-first**: `src/main.py` loads `data/songs.csv`, scores every song for the default **pop / happy** profile (`target_energy` **0.8**), and prints a framed list with **song title**, **final score**, and **reason** lines from the scoring function.
+The simulation is **CLI-first**: `python -m src.main` loads `data/songs.csv` and prints **ranked top 5** for each profile with **title**, **final score**, and **reason** lines from `score_song`.
 
-**Terminal screenshot** (titles, scores, and reasons):
+**Stress-test profiles** (see `src/main.py`): *High-Energy Pop*, *Chill Lofi*, *Deep Intense Rock*. **Edge / adversarial** examples include very high `target_energy` with a **somber** mood, a **melancholic** classical seeker, and a narrow **jazz / relaxed** profile.
 
-![CLI verification: python -m src.main](docs/cli-verification.png)
+**Full terminal log** (all profiles, one run): [`docs/phase4-stress-test-output.txt`](docs/phase4-stress-test-output.txt). For coursework, capture your own terminal screenshots per profile and drop them under `docs/` if images are required.
 
-**Text capture** (regenerated with `python -m src.main` → `docs/cli-verification-output.txt`):
+**Sample visual** (earlier single-profile demo):
 
-```text
-Loaded songs: 18
+![CLI verification: recommendations layout](docs/cli-verification.png)
 
-========================================================================
-  TOP RECOMMENDATIONS
-========================================================================
+**Weight-shift experiment** (Phase 4): half genre weight, double energy points — set env then run:
 
-  #1  Sunrise City
-      Final score:  3.98
-      Reasons:
-        · genre match (+2.0)
-        · mood match (+1.0)
-        · energy fit (+0.98); song energy 0.82 vs target 0.80
-
-------------------------------------------------------------------------
-
-  #2  Gym Hero
-      Final score:  2.87
-      Reasons:
-        · genre match (+2.0)
-        · energy fit (+0.87); song energy 0.93 vs target 0.80
-
-------------------------------------------------------------------------
-
-  #3  Rooftop Lights
-      Final score:  1.96
-      Reasons:
-        · mood match (+1.0)
-        · energy fit (+0.96); song energy 0.76 vs target 0.80
-
-------------------------------------------------------------------------
-
-  #4  Night Drive Loop
-      Final score:  0.95
-      Reasons:
-        · energy fit (+0.95); song energy 0.75 vs target 0.80
-
-------------------------------------------------------------------------
-
-  #5  Iron Meridian
-      Final score:  0.92
-      Reasons:
-        · energy fit (+0.92); song energy 0.88 vs target 0.80
-
-========================================================================
-
+```bash
+MUSIC_RECOMMENDER_EXPERIMENT=weight_shift python -m src.main
 ```
 
-**Checkpoint:** You have a working Python recommender in `src/recommender.py` that loads CSV rows, computes scores from user preferences, and produces a **ranked, explained** list in the terminal.
+Capture: [`docs/phase4-weight-shift-output.txt`](docs/phase4-weight-shift-output.txt).
+
+**Why “Gym Hero” can rank high for “happy pop” seekers (plain language):** the program does not know that “intense” is the opposite of “happy.” It only checks whether the **genre** string matches (**pop** → big bonus) and whether **energy** is close to your target. *Gym Hero* is **pop** with very high energy, so it often beats non-pop tracks that actually match **happy** better—unless you change the weights or teach the model what “mood” means beyond the label.
+
+**Checkpoint:** `src/recommender.py` loads CSV rows, scores by explicit rules, and `src/main.py` demonstrates **multiple** taste profiles in the terminal. See **`model_card.md`** (bias / evaluation) and **`reflection.md`** (profile comparisons).
 
 ### Running Tests
 
@@ -212,150 +167,34 @@ Run the starter tests with:
 pytest
 ```
 
-You can add more tests in `tests/test_recommender.py`.
+Additional cases belong in `tests/test_recommender.py`.
 
 ---
 
+## Advanced challenges (features)
+
+- **Challenge 1 — Richer data:** `data/songs.csv` adds **popularity** (0–100), **release_decade**, **mood_tags** (pipe-separated, e.g. `happy|euphoric`), **production_style** (`bedroom` / `studio` / `live`), **instrumental** (0/1), **vocal_language**. Scoring adds math-based points (popularity scale, decade similarity to optional `preferred_decade`, tag overlap with `favorite_mood`, optional `prefers_bedroom_production`, `wants_instrumental`, `preferred_language`).
+- **Challenge 2 — Scoring modes (strategy pattern):** `get_strategy_weights(mode)` returns weights for **`balanced`**, **`genre_first`**, **`mood_first`**, **`energy_focused`**. Switch with `SCORING_MODE=...` when running `python -m src.main`, or set `SHOW_MODE_COMPARE=1` to print all four for the first profile. `ModeStrategy` / `ScoringStrategy` protocol in `src/recommender.py` keeps modes modular.
+- **Challenge 3 — Diversity:** `recommend_songs(..., apply_diversity=True)` picks top‑`k` **greedily** with penalties when **artist** or **genre** already appears in the list; reasons may include a **diversity adjustment** line.
+- **Challenge 4 — Tables:** CLI output uses **`tabulate`** (`pip install -r requirements.txt`) with columns **# / Title / Artist / Genre / Score / Reasons**.
+
 ## Experiments You Tried
 
-Use this section to document the experiments you ran. For example:
-
-- What happened when you changed the weight on genre from 2.0 to 0.5
-- What happened when you added tempo or valence to the score
-- How did your system behave for different types of users
+- **Multi-profile stress test:** `src/main.py` runs six preference dicts; full log in `docs/phase4-stress-test-output.txt`.
+- **Weight shift:** `MUSIC_RECOMMENDER_EXPERIMENT=weight_shift` sets genre to **+1.0** per match and scales energy similarity by **×2** (see `src/recommender.py`); compare `docs/phase4-weight-shift-output.txt` to the baseline log—high-energy rows gain influence, genre-only ties break differently.
+- **Feature removal (optional):** comment out the mood branch in `compute_score_and_reasons` locally to see rankings ignore mood; not enabled in the committed default.
 
 ---
 
 ## Limitations and Risks
 
-Summarize some limitations of your recommender.
-
-Examples:
-
-- It only works on a tiny catalog
-- It does not understand lyrics or language
-- It might over favor one genre or mood
-
-You will go deeper on this in your model card.
+- **Tiny catalog** — With ~18 rows, “top 5” often reuses the same genres; results are demos, not population-level behavior.
+- **No lyrics or audio** — Only spreadsheet fields; nuance of real tracks is missing.
+- **Label rigidity** — Subgenres and synonyms are not merged; mood mismatches are not penalized, only “no mood bonus.”
+- **Not for production** — Do not use this system for real user-facing or high-stakes decisions. See [**model_card.md**](model_card.md) for intended vs non-intended use.
 
 ---
 
-## Reflection
+## Reflection (Phase 5)
 
-Read and complete `model_card.md`:
-
-[**Model Card**](model_card.md)
-
-Write 1 to 2 paragraphs here about what you learned:
-
-- about how recommenders turn data into predictions
-- about where bias or unfairness could show up in systems like this
-
-
----
-
-## 7. `model_card_template.md`
-
-Combines reflection and model card framing from the Module 3 guidance. :contentReference[oaicite:2]{index=2}  
-
-```markdown
-# 🎧 Model Card - Music Recommender Simulation
-
-## 1. Model Name
-
-Give your recommender a name, for example:
-
-> VibeFinder 1.0
-
----
-
-## 2. Intended Use
-
-- What is this system trying to do
-- Who is it for
-
-Example:
-
-> This model suggests 3 to 5 songs from a small catalog based on a user's preferred genre, mood, and energy level. It is for classroom exploration only, not for real users.
-
----
-
-## 3. How It Works (Short Explanation)
-
-Describe your scoring logic in plain language.
-
-- What features of each song does it consider
-- What information about the user does it use
-- How does it turn those into a number
-
-Try to avoid code in this section, treat it like an explanation to a non programmer.
-
----
-
-## 4. Data
-
-Describe your dataset.
-
-- How many songs are in `data/songs.csv`
-- Did you add or remove any songs
-- What kinds of genres or moods are represented
-- Whose taste does this data mostly reflect
-
----
-
-## 5. Strengths
-
-Where does your recommender work well
-
-You can think about:
-- Situations where the top results "felt right"
-- Particular user profiles it served well
-- Simplicity or transparency benefits
-
----
-
-## 6. Limitations and Bias
-
-Where does your recommender struggle
-
-Some prompts:
-- Does it ignore some genres or moods
-- Does it treat all users as if they have the same taste shape
-- Is it biased toward high energy or one genre by default
-- How could this be unfair if used in a real product
-
----
-
-## 7. Evaluation
-
-How did you check your system
-
-Examples:
-- You tried multiple user profiles and wrote down whether the results matched your expectations
-- You compared your simulation to what a real app like Spotify or YouTube tends to recommend
-- You wrote tests for your scoring logic
-
-You do not need a numeric metric, but if you used one, explain what it measures.
-
----
-
-## 8. Future Work
-
-If you had more time, how would you improve this recommender
-
-Examples:
-
-- Add support for multiple users and "group vibe" recommendations
-- Balance diversity of songs instead of always picking the closest match
-- Use more features, like tempo ranges or lyric themes
-
----
-
-## 9. Personal Reflection
-
-A few sentences about what you learned:
-
-- What surprised you about how your system behaved
-- How did building this change how you think about real music recommenders
-- Where do you think human judgment still matters, even if the model seems "smart"
-
+The **model card** is the main deliverable: [**model_card.md**](model_card.md). It includes a **Personal Reflection** (learning moments, AI tooling, surprises, next steps). For profile-by-profile notes, see [**reflection.md**](reflection.md).

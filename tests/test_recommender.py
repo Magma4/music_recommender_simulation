@@ -1,4 +1,4 @@
-from src.recommender import Song, UserProfile, Recommender, score_song
+from src.recommender import Song, UserProfile, Recommender, recommend_songs, score_song
 
 def make_small_recommender() -> Recommender:
     songs = [
@@ -60,9 +60,73 @@ def test_score_song_returns_numeric_score_and_reason_strings():
     total, reasons = score_song(user_prefs, song)
     assert total == 4.0
     assert isinstance(reasons, list)
-    assert any("genre match (+2.0)" in r for r in reasons)
-    assert any("mood match (+1.0)" in r for r in reasons)
+    assert any("genre match (+2." in r for r in reasons)
+    assert any("mood match (+1." in r for r in reasons)
     assert any(r.startswith("energy fit (+") for r in reasons)
+
+
+def test_recommend_songs_diversity_appends_reason_when_genre_repeats():
+    """Second pick same genre as first should note diversity adjustment (Challenge 3)."""
+    songs = [
+        {
+            "id": 1,
+            "title": "A",
+            "artist": "Artist1",
+            "genre": "pop",
+            "mood": "happy",
+            "energy": 0.9,
+            "tempo_bpm": 120.0,
+            "valence": 0.8,
+            "danceability": 0.8,
+            "acousticness": 0.2,
+            "popularity": 50,
+            "release_decade": 2020,
+            "mood_tags": "happy",
+            "production_style": "studio",
+            "instrumental": 0,
+            "vocal_language": "en",
+        },
+        {
+            "id": 2,
+            "title": "B",
+            "artist": "Artist2",
+            "genre": "pop",
+            "mood": "happy",
+            "energy": 0.88,
+            "tempo_bpm": 118.0,
+            "valence": 0.8,
+            "danceability": 0.8,
+            "acousticness": 0.2,
+            "popularity": 40,
+            "release_decade": 2020,
+            "mood_tags": "happy",
+            "production_style": "studio",
+            "instrumental": 0,
+            "vocal_language": "en",
+        },
+        {
+            "id": 3,
+            "title": "C",
+            "artist": "Artist3",
+            "genre": "rock",
+            "mood": "happy",
+            "energy": 0.5,
+            "tempo_bpm": 100.0,
+            "valence": 0.5,
+            "danceability": 0.5,
+            "acousticness": 0.5,
+            "popularity": 30,
+            "release_decade": 2020,
+            "mood_tags": "happy",
+            "production_style": "studio",
+            "instrumental": 0,
+            "vocal_language": "en",
+        },
+    ]
+    prefs = {"favorite_genre": "pop", "favorite_mood": "happy", "target_energy": 0.9}
+    out = recommend_songs(prefs, songs, k=2, scoring_mode="balanced", apply_diversity=True)
+    joined = " ".join(" ".join(r) for _, _, r in out)
+    assert "diversity adjustment" in joined
 
 
 def test_explain_recommendation_returns_non_empty_string():

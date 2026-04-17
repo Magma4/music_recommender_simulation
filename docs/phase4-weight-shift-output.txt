@@ -1,0 +1,287 @@
+Loaded songs: 18
+(Scoring experiment: MUSIC_RECOMMENDER_EXPERIMENT='weight_shift')
+
+========================================================================
+  PROFILE: Stress test — High-Energy Pop
+  genre='pop'  mood='happy'  target_energy=0.92
+========================================================================
+
+========================================================================
+  TOP RECOMMENDATIONS
+========================================================================
+
+  #1  Sunrise City
+      Final score:  3.80
+      Reasons:
+        · genre match (+1.0)
+        · mood match (+1.0)
+        · energy fit (+1.80); similarity 0.90 × 2; song 0.82 vs target 0.92
+
+------------------------------------------------------------------------
+
+  #2  Gym Hero
+      Final score:  2.98
+      Reasons:
+        · genre match (+1.0)
+        · energy fit (+1.98); similarity 0.99 × 2; song 0.93 vs target 0.92
+
+------------------------------------------------------------------------
+
+  #3  Rooftop Lights
+      Final score:  2.68
+      Reasons:
+        · mood match (+1.0)
+        · energy fit (+1.68); similarity 0.84 × 2; song 0.76 vs target 0.92
+
+------------------------------------------------------------------------
+
+  #4  Storm Runner
+      Final score:  1.98
+      Reasons:
+        · energy fit (+1.98); similarity 0.99 × 2; song 0.91 vs target 0.92
+
+------------------------------------------------------------------------
+
+  #5  Iron Meridian
+      Final score:  1.92
+      Reasons:
+        · energy fit (+1.92); similarity 0.96 × 2; song 0.88 vs target 0.92
+
+========================================================================
+
+========================================================================
+  PROFILE: Stress test — Chill Lofi
+  genre='lofi'  mood='chill'  target_energy=0.35
+========================================================================
+
+========================================================================
+  TOP RECOMMENDATIONS
+========================================================================
+
+  #1  Library Rain
+      Final score:  4.00
+      Reasons:
+        · genre match (+1.0)
+        · mood match (+1.0)
+        · energy fit (+2.00); similarity 1.00 × 2; song 0.35 vs target 0.35
+
+------------------------------------------------------------------------
+
+  #2  Midnight Coding
+      Final score:  3.86
+      Reasons:
+        · genre match (+1.0)
+        · mood match (+1.0)
+        · energy fit (+1.86); similarity 0.93 × 2; song 0.42 vs target 0.35
+
+------------------------------------------------------------------------
+
+  #3  Focus Flow
+      Final score:  2.90
+      Reasons:
+        · genre match (+1.0)
+        · energy fit (+1.90); similarity 0.95 × 2; song 0.40 vs target 0.35
+
+------------------------------------------------------------------------
+
+  #4  Spacewalk Thoughts
+      Final score:  2.86
+      Reasons:
+        · mood match (+1.0)
+        · energy fit (+1.86); similarity 0.93 × 2; song 0.28 vs target 0.35
+
+------------------------------------------------------------------------
+
+  #5  Coffee Shop Stories
+      Final score:  1.96
+      Reasons:
+        · energy fit (+1.96); similarity 0.98 × 2; song 0.37 vs target 0.35
+
+========================================================================
+
+========================================================================
+  PROFILE: Stress test — Deep Intense Rock
+  genre='rock'  mood='intense'  target_energy=0.88
+========================================================================
+
+========================================================================
+  TOP RECOMMENDATIONS
+========================================================================
+
+  #1  Storm Runner
+      Final score:  3.94
+      Reasons:
+        · genre match (+1.0)
+        · mood match (+1.0)
+        · energy fit (+1.94); similarity 0.97 × 2; song 0.91 vs target 0.88
+
+------------------------------------------------------------------------
+
+  #2  Gym Hero
+      Final score:  2.90
+      Reasons:
+        · mood match (+1.0)
+        · energy fit (+1.90); similarity 0.95 × 2; song 0.93 vs target 0.88
+
+------------------------------------------------------------------------
+
+  #3  Iron Meridian
+      Final score:  2.00
+      Reasons:
+        · energy fit (+2.00); similarity 1.00 × 2; song 0.88 vs target 0.88
+
+------------------------------------------------------------------------
+
+  #4  Sunrise City
+      Final score:  1.88
+      Reasons:
+        · energy fit (+1.88); similarity 0.94 × 2; song 0.82 vs target 0.88
+
+------------------------------------------------------------------------
+
+  #5  Rooftop Lights
+      Final score:  1.76
+      Reasons:
+        · energy fit (+1.76); similarity 0.88 × 2; song 0.76 vs target 0.88
+
+========================================================================
+
+========================================================================
+  PROFILE: Edge / adversarial — Adversarial: very high energy + somber mood
+  genre='pop'  mood='somber'  target_energy=0.95
+========================================================================
+
+========================================================================
+  TOP RECOMMENDATIONS
+========================================================================
+
+  #1  Gym Hero
+      Final score:  2.96
+      Reasons:
+        · genre match (+1.0)
+        · energy fit (+1.96); similarity 0.98 × 2; song 0.93 vs target 0.95
+
+------------------------------------------------------------------------
+
+  #2  Sunrise City
+      Final score:  2.74
+      Reasons:
+        · genre match (+1.0)
+        · energy fit (+1.74); similarity 0.87 × 2; song 0.82 vs target 0.95
+
+------------------------------------------------------------------------
+
+  #3  Storm Runner
+      Final score:  1.92
+      Reasons:
+        · energy fit (+1.92); similarity 0.96 × 2; song 0.91 vs target 0.95
+
+------------------------------------------------------------------------
+
+  #4  Iron Meridian
+      Final score:  1.86
+      Reasons:
+        · energy fit (+1.86); similarity 0.93 × 2; song 0.88 vs target 0.95
+
+------------------------------------------------------------------------
+
+  #5  Willow & Wire
+      Final score:  1.72
+      Reasons:
+        · mood match (+1.0)
+        · energy fit (+0.72); similarity 0.36 × 2; song 0.31 vs target 0.95
+
+========================================================================
+
+========================================================================
+  PROFILE: Edge / adversarial — Edge: sad-adjacent mood + low energy target (melancholic, 0.25)
+  genre='classical'  mood='melancholic'  target_energy=0.25
+========================================================================
+
+========================================================================
+  TOP RECOMMENDATIONS
+========================================================================
+
+  #1  Cathedral Echoes
+      Final score:  3.94
+      Reasons:
+        · genre match (+1.0)
+        · mood match (+1.0)
+        · energy fit (+1.94); similarity 0.97 × 2; song 0.22 vs target 0.25
+
+------------------------------------------------------------------------
+
+  #2  Spacewalk Thoughts
+      Final score:  1.94
+      Reasons:
+        · energy fit (+1.94); similarity 0.97 × 2; song 0.28 vs target 0.25
+
+------------------------------------------------------------------------
+
+  #3  Willow & Wire
+      Final score:  1.88
+      Reasons:
+        · energy fit (+1.88); similarity 0.94 × 2; song 0.31 vs target 0.25
+
+------------------------------------------------------------------------
+
+  #4  Library Rain
+      Final score:  1.80
+      Reasons:
+        · energy fit (+1.80); similarity 0.90 × 2; song 0.35 vs target 0.25
+
+------------------------------------------------------------------------
+
+  #5  Coffee Shop Stories
+      Final score:  1.76
+      Reasons:
+        · energy fit (+1.76); similarity 0.88 × 2; song 0.37 vs target 0.25
+
+========================================================================
+
+========================================================================
+  PROFILE: Edge / adversarial — Edge: jazz + relaxed + medium energy (single-row genre)
+  genre='jazz'  mood='relaxed'  target_energy=0.45
+========================================================================
+
+========================================================================
+  TOP RECOMMENDATIONS
+========================================================================
+
+  #1  Coffee Shop Stories
+      Final score:  3.84
+      Reasons:
+        · genre match (+1.0)
+        · mood match (+1.0)
+        · energy fit (+1.84); similarity 0.92 × 2; song 0.37 vs target 0.45
+
+------------------------------------------------------------------------
+
+  #2  Midnight Coding
+      Final score:  1.94
+      Reasons:
+        · energy fit (+1.94); similarity 0.97 × 2; song 0.42 vs target 0.45
+
+------------------------------------------------------------------------
+
+  #3  Dust Road Anthem
+      Final score:  1.94
+      Reasons:
+        · energy fit (+1.94); similarity 0.97 × 2; song 0.48 vs target 0.45
+
+------------------------------------------------------------------------
+
+  #4  Focus Flow
+      Final score:  1.90
+      Reasons:
+        · energy fit (+1.90); similarity 0.95 × 2; song 0.40 vs target 0.45
+
+------------------------------------------------------------------------
+
+  #5  Sunscorched Dub
+      Final score:  1.82
+      Reasons:
+        · energy fit (+1.82); similarity 0.91 × 2; song 0.54 vs target 0.45
+
+========================================================================
+

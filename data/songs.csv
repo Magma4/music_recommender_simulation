@@ -1,19 +1,19 @@
-id,title,artist,genre,mood,energy,tempo_bpm,valence,danceability,acousticness
-1,Sunrise City,Neon Echo,pop,happy,0.82,118,0.84,0.79,0.18
-2,Midnight Coding,LoRoom,lofi,chill,0.42,78,0.56,0.62,0.71
-3,Storm Runner,Voltline,rock,intense,0.91,152,0.48,0.66,0.10
-4,Library Rain,Paper Lanterns,lofi,chill,0.35,72,0.60,0.58,0.86
-5,Gym Hero,Max Pulse,pop,intense,0.93,132,0.77,0.88,0.05
-6,Spacewalk Thoughts,Orbit Bloom,ambient,chill,0.28,60,0.65,0.41,0.92
-7,Coffee Shop Stories,Slow Stereo,jazz,relaxed,0.37,90,0.71,0.54,0.89
-8,Night Drive Loop,Neon Echo,synthwave,moody,0.75,110,0.49,0.73,0.22
-9,Focus Flow,LoRoom,lofi,focused,0.40,80,0.59,0.60,0.78
-10,Rooftop Lights,Indigo Parade,indie pop,happy,0.76,124,0.81,0.82,0.35
-11,Velvet Static,The Paperweights,hip-hop,brooding,0.55,88,0.35,0.68,0.24
-12,Cathedral Echoes,Astrid Vale,classical,melancholic,0.22,72,0.32,0.18,0.94
-13,Dust Road Anthem,Harlan & The Hollow,country,nostalgic,0.48,102,0.58,0.52,0.72
-14,Iron Meridian,Cinderfang,metal,euphoric,0.88,168,0.62,0.41,0.08
-15,Midnight Sugar,Juno Keys,R&B,playful,0.61,96,0.74,0.81,0.15
-16,Sunscorched Dub,Skylark Sound,reggae,uplifting,0.54,138,0.79,0.76,0.33
-17,Willow & Wire,Silver Tiding,folk,somber,0.31,84,0.28,0.45,0.91
-18,Pulse Division,Vektroid Labs,electronic,dreamy,0.67,122,0.55,0.69,0.11
+id,title,artist,genre,mood,energy,tempo_bpm,valence,danceability,acousticness,popularity,release_decade,mood_tags,production_style,instrumental,vocal_language
+1,Sunrise City,Neon Echo,pop,happy,0.82,118,0.84,0.79,0.18,88,2020,happy|uplifting|euphoric,studio,0,en
+2,Midnight Coding,LoRoom,lofi,chill,0.42,78,0.56,0.62,0.71,72,2020,chill|nostalgic|focused,bedroom,1,en
+3,Storm Runner,Voltline,rock,intense,0.91,152,0.48,0.66,0.10,81,2010,intense|aggressive|euphoric,live,0,en
+4,Library Rain,Paper Lanterns,lofi,chill,0.35,72,0.60,0.58,0.86,65,2010,chill|nostalgic|melancholic,bedroom,1,en
+5,Gym Hero,Max Pulse,pop,intense,0.93,132,0.77,0.88,0.05,92,2020,intense|aggressive|euphoric,studio,0,en
+6,Spacewalk Thoughts,Orbit Bloom,ambient,chill,0.28,60,0.65,0.41,0.92,54,2010,chill|dreamy|nostalgic,studio,1,instrumental
+7,Coffee Shop Stories,Slow Stereo,jazz,relaxed,0.37,90,0.71,0.54,0.89,61,2000,relaxed|nostalgic|warm,live,0,en
+8,Night Drive Loop,Neon Echo,synthwave,moody,0.75,110,0.49,0.73,0.22,79,2020,moody|nostalgic|brooding,studio,0,en
+9,Focus Flow,LoRoom,lofi,focused,0.40,80,0.59,0.60,0.78,70,2020,focused|chill|minimal,bedroom,1,instrumental
+10,Rooftop Lights,Indigo Parade,indie pop,happy,0.76,124,0.81,0.82,0.35,85,2020,happy|euphoric|playful,studio,0,en
+11,Velvet Static,The Paperweights,hip-hop,brooding,0.55,88,0.35,0.68,0.24,58,2010,brooding|aggressive|moody,studio,0,en
+12,Cathedral Echoes,Astrid Vale,classical,melancholic,0.22,72,0.32,0.18,0.94,48,1990,melancholic|nostalgic|somber,live,1,instrumental
+13,Dust Road Anthem,Harlan & The Hollow,country,nostalgic,0.48,102,0.58,0.52,0.72,76,2010,nostalgic|warm|relaxed,studio,0,en
+14,Iron Meridian,Cinderfang,metal,euphoric,0.88,168,0.62,0.41,0.08,83,2010,euphoric|aggressive|intense,live,0,en
+15,Midnight Sugar,Juno Keys,R&B,playful,0.61,96,0.74,0.81,0.15,80,2020,playful|uplifting|euphoric,studio,0,en
+16,Sunscorched Dub,Skylark Sound,reggae,uplifting,0.54,138,0.79,0.76,0.33,67,2000,uplifting|relaxed|warm,studio,0,en
+17,Willow & Wire,Silver Tiding,folk,somber,0.31,84,0.28,0.45,0.91,52,2010,somber|melancholic|nostalgic,bedroom,0,en
+18,Pulse Division,Vektroid Labs,electronic,dreamy,0.67,122,0.55,0.69,0.11,74,2020,dreamy|euphoric|chill,studio,1,instrumental
